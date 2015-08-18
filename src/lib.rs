@@ -14,12 +14,13 @@
 
 #![cfg(unix)]
 
+#![feature(into_raw_os)]
 #![feature(libc)]
 
 extern crate libc;
 
 use std::io;
-use std::os::unix::io::{AsRawFd, RawFd};
+use std::os::unix::io::{AsRawFd, IntoRawFd, RawFd};
 
 mod pipe;
 mod splice;
@@ -70,8 +71,8 @@ impl AsRawFd for FileDesc {
     }
 }
 
-impl Into<RawFd> for FileDesc {
-    fn into(mut self) -> RawFd {
+impl IntoRawFd for FileDesc {
+    fn into_raw_fd(mut self) -> RawFd {
         self.close_on_drop = false;
         self.fd
     }
