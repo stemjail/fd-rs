@@ -14,9 +14,6 @@
 
 #![cfg(unix)]
 
-#![feature(into_raw_os)]
-#![feature(libc)]
-
 extern crate libc;
 
 use std::io;
