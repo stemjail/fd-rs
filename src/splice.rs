@@ -30,7 +30,7 @@ mod raw {
 
     // From asm-generic/posix_types.h
     #[allow(non_camel_case_types)]
-    type loff_t = c_longlong;
+    pub type loff_t = c_longlong;
 
     extern {
         pub fn splice(fd_in: RawFd, off_in: *mut loff_t, fd_out: RawFd, off_out: *mut loff_t,
