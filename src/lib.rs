@@ -16,6 +16,7 @@
 
 extern crate libc;
 
+use libc::{F_GETFL, F_SETFL, O_APPEND, c_int, fcntl};
 use std::io;
 use std::os::unix::io::{AsRawFd, IntoRawFd, RawFd};
 
@@ -73,4 +74,26 @@ impl IntoRawFd for FileDesc {
         self.close_on_drop = false;
         self.fd
     }
+}
+
+/// Return the original `fd` status flags if modified (cf. fcntl(2)).
+pub fn unset_append_flag(fd: RawFd) -> io::Result<Option<c_int>> {
+    let status = unsafe { fcntl(fd, F_GETFL) };
+    if status == -1 {
+        return Err(io::Error::last_os_error());
+    }
+    if status & O_APPEND == 0 {
+        return Ok(None);
+    }
+    try!(set_flags(fd, status & !O_APPEND));
+    Ok(Some(status))
+}
+
+/// Set file status flags (cf. fcntl(2)).
+pub fn set_flags(fd: RawFd, status: c_int) -> io::Result<()> {
+    let ret = unsafe { fcntl(fd, F_SETFL, status) };
+    if ret == -1 {
+        return Err(io::Error::last_os_error());
+    }
+    Ok(())
 }

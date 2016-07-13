@@ -64,6 +64,9 @@ static SPLICE_BUFFER_SIZE: size_t = 1024;
 ///
 /// This function should be used in a dedicated thread, e.g. `thread::spawn(move ||
 /// splice_loop(do_flush, None, rx.as_raw_fd(), tx.as_raw_fd()))`.
+///
+/// You should ensure that there is no append flag to the `fd_out` file descriptor.
+/// You can use `unset_append_flag()` if needed and `set_flags()` to restore to the initial state.
 pub fn splice_loop(do_flush: Arc<AtomicBool>, flush_event: Option<Sender<()>>, fd_in: RawFd, fd_out: RawFd) {
     'select: loop {
         if do_flush.load(Relaxed) {
