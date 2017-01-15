@@ -1,9 +1,10 @@
 [package]
 name = "fd"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Mickaël Salaün <mic@digikod.net>"]
 description = "File descriptor utilities"
 repository = "https://github.com/stemjail/fd-rs"
+documentation = "https://docs.rs/fd/"
 readme = "README.md"
 keywords = ["linux", "fd", "splice", "pipe"]
 license = "LGPL-3.0"
