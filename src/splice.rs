@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Mickaël Salaün
+// Copyright (C) 2015-2017 Mickaël Salaün
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -24,9 +24,7 @@ mod raw {
     use std::os::unix::io::RawFd;
     use ::libc::{c_longlong, size_t, ssize_t, c_uint};
 
-    // From x86_64-linux-gnu/bits/fcntl-linux.h
-    #[cfg(target_arch="x86_64")]
-    pub const SPLICE_F_NONBLOCK: c_uint = 2;
+    pub use ::libc::SPLICE_F_NONBLOCK;
 
     // From asm-generic/posix_types.h
     #[allow(non_camel_case_types)]
