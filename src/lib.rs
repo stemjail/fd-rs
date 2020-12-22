@@ -23,6 +23,7 @@ use std::os::unix::io::{AsRawFd, IntoRawFd, RawFd};
 mod pipe;
 mod splice;
 
+#[cfg(not(target_os = "macos"))]
 pub use splice::splice_loop;
 pub use pipe::Pipe;
 
