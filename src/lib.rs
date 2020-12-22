@@ -86,7 +86,7 @@ pub fn unset_append_flag(fd: RawFd) -> io::Result<Option<c_int>> {
     if status & O_APPEND == 0 {
         return Ok(None);
     }
-    try!(set_flags(fd, status & !O_APPEND));
+    set_flags(fd, status & !O_APPEND)?;
     Ok(Some(status))
 }
 
